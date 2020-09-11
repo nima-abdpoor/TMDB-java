@@ -2,7 +2,6 @@ package com.chinachino.mvvm.Requests;
 
 import com.chinachino.mvvm.Requests.Responses.RecipeResponse;
 import com.chinachino.mvvm.Requests.Responses.RecipeSearchResponse;
-import com.chinachino.mvvm.models.Recipe;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -19,5 +18,4 @@ public interface RecipeAPI {
     Call<RecipeResponse> getRecipeResponses(
             @Query("rId") String id
     );
-
 }
