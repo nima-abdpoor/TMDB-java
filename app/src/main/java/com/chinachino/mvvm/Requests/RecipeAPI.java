@@ -1,5 +1,6 @@
 package com.chinachino.mvvm.Requests;
 
+import com.chinachino.mvvm.Requests.Responses.RecipeResponse;
 import com.chinachino.mvvm.Requests.Responses.RecipeSearchResponse;
 import com.chinachino.mvvm.models.Recipe;
 
@@ -15,8 +16,8 @@ public interface RecipeAPI {
     );
 
     @GET("api/get")
-    Call<Recipe> getRecipeResponses(
-            @Query("rid") String id
+    Call<RecipeResponse> getRecipeResponses(
+            @Query("rId") String id
     );
 
 }

@@ -3,14 +3,29 @@ package com.chinachino.mvvm.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.Arrays;
 
 public class Recipe implements Parcelable {
+    @SerializedName("ingredients")
+    @Expose
     private String[] ingredients;
+    @SerializedName("image_url")
+    @Expose
     private String image_url;
+    @SerializedName("publisher")
+    @Expose
     private String publisher;
+    @SerializedName("recipe_id")
+    @Expose
     private String recipe_id;
+    @SerializedName("title")
+    @Expose
     private String title;
+    @SerializedName("social_rank")
+    @Expose
     private float social_rank;
 
     public Recipe() {
