@@ -12,9 +12,9 @@ public class ServiceGenerator {
                     .baseUrl(BASE_URL);
 
     private static Retrofit retrofit = retrofitbuilder.build();
-    private static RecipeAPI recipeAPI = retrofit.create(RecipeAPI.class);
+    private static TheMovieDataBaseAPI theMovieDataBaseAPI = retrofit.create(TheMovieDataBaseAPI.class);
 
-    public static RecipeAPI getRecipeAPI(){
-        return recipeAPI;
+    public static TheMovieDataBaseAPI GetMovies(){
+        return theMovieDataBaseAPI;
     }
 }

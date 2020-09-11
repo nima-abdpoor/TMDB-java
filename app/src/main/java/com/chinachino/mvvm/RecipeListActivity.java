@@ -3,14 +3,19 @@ package com.chinachino.mvvm;
 import android.os.Bundle;
 import android.util.Log;
 
-import com.chinachino.mvvm.Requests.RecipeAPI;
-import com.chinachino.mvvm.Requests.Responses.RecipeResponse;
 import com.chinachino.mvvm.Requests.ServiceGenerator;
-import com.chinachino.mvvm.models.Recipe;
+import com.chinachino.mvvm.Requests.TheMovieDataBaseAPI;
+import com.chinachino.mvvm.models.Example;
+import com.chinachino.mvvm.models.Result;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+
+import static com.chinachino.mvvm.Utils.Constants.API_KEY;
+import static com.chinachino.mvvm.Utils.Constants.DEFAULT_ADULT;
+import static com.chinachino.mvvm.Utils.Constants.DEFAULT_LANGUAGE;
+import static com.chinachino.mvvm.Utils.Constants.DEFAULT_PAGE;
 
 public class RecipeListActivity extends BaseActivity {
     private static final String TAG = "RecipeListActivity";
@@ -19,23 +24,21 @@ public class RecipeListActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.acitivity_recipe_list);
-        TestSearRetrofit();
+        TestSearRetrofit("salam");
     }
 
-    private void TestSearRetrofit() {
-        RecipeAPI recipeAPI = ServiceGenerator.getRecipeAPI();
-        recipeAPI.getRecipeResponses("41470")
-                .enqueue(new Callback<RecipeResponse>() {
+    private void TestSearRetrofit(String query) {
+        TheMovieDataBaseAPI theMoviedbAPI = ServiceGenerator.GetMovies();
+        theMoviedbAPI.SearchResponse(API_KEY,DEFAULT_LANGUAGE,query,DEFAULT_PAGE,DEFAULT_ADULT)
+                .enqueue(new Callback<Example>() {
                     @Override
-                    public void onResponse(Call<RecipeResponse> call, Response<RecipeResponse> response) {
+                    public void onResponse(Call<Example> call, Response<Example> response) {
                         if (response.isSuccessful()) {
-                            Log.d(TAG, "onResponse: code = " + response.code());
-                            Log.d(TAG, "onResponse: response" + response.toString());
-                            Log.d(TAG, "onResponse: " + response.body().toString());
-                            Recipe recipe = response.body().getRecipe();
-
-                            Log.d(TAG, "onResponse: title -> " + recipe.getTitle());
-
+                            Example example = response.body();
+                            Log.d(TAG, "onResponse: "+example.getTotalPages());
+                            for (Result result:example.getResults()){
+                                Log.d(TAG, "onResponse: result"+result.getTitle());
+                            }
                         } else {
                             try {
                                 Log.d(TAG, "onResponse: error" + response.errorBody().toString());
@@ -46,7 +49,7 @@ public class RecipeListActivity extends BaseActivity {
                     }
 
                     @Override
-                    public void onFailure(Call<RecipeResponse> call, Throwable t) {
+                    public void onFailure(Call<Example> call, Throwable t) {
 
                     }
                 });
