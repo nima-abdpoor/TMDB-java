@@ -49,6 +49,7 @@ public class MovieListActivity extends BaseActivity implements OnMovieListener {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                adapter.displayLoading();
                 SearchMovieAPI(query);
                 return false;
             }
