@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chinachino.mvvm.R;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    TextView title, description, socialRank;
+    TextView title, description, releaseDate;
     AppCompatImageView image;
     OnMovieListener onMovieListener;
 
@@ -18,7 +18,7 @@ public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnC
         super(itemView);
         title = itemView.findViewById(R.id.movie_title);
         description = itemView.findViewById(R.id.movie_description);
-        socialRank = itemView.findViewById(R.id.movie_social_rank);
+        releaseDate = itemView.findViewById(R.id.release_date);
         image = itemView.findViewById(R.id.movie_image);
         this.onMovieListener = onMovieListener;
         itemView.setOnClickListener(this::onClick);

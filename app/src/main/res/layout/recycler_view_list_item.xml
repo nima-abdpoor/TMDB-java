@@ -9,6 +9,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/card_view"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="10dp"
+        android:elevation="10dp"
         app:cardElevation="10dp">
 
         <LinearLayout
@@ -44,21 +47,21 @@
                     android:weightSum="100">
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="90"
+                        android:layout_weight="70"
                         android:textSize="@dimen/movie_popularity_size"
                         android:id="@+id/movie_description"
                         android:gravity="start"/>
 
                     <TextView
-                        android:layout_width="0dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_weight="10"
+                        android:layout_weight="30"
                         android:textSize="@dimen/movie_popularity_size"
                         android:textColor="@color/red"
-                        android:id="@+id/movie_social_rank"
-                        android:gravity="center"/>
+                        android:id="@+id/release_date"
+                        android:gravity="end"/>
 
 
                 </LinearLayout>

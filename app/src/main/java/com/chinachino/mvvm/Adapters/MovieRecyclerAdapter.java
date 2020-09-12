@@ -62,9 +62,13 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
                     .into(((MovieViewHolder) viewHolder).image);
 
             ((MovieViewHolder) viewHolder).title.setText(results.get(i).getTitle());
-            ((MovieViewHolder) viewHolder).description.setText(results.get(i).getOriginalLanguage());
-            ((MovieViewHolder) viewHolder).socialRank.setText(String.valueOf(Math.round(results.get(i).getPopularity())));
+            ((MovieViewHolder) viewHolder).description.setText(getOverview(results.get(i)));
+            ((MovieViewHolder) viewHolder).releaseDate.setText(String.valueOf(results.get(i).getRelease_date()));
         }
+    }
+
+    private String getOverview(Result result) {
+       return result.getOverview().substring(0,20)+"...";
     }
 
     @Override

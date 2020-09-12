@@ -19,6 +19,18 @@ public class Result {
     @SerializedName("title")
     @Expose
     private String title;
+
+    public String getRelease_date() {
+        return release_date;
+    }
+
+    public void setRelease_date(String release_date) {
+        this.release_date = release_date;
+    }
+
+    @SerializedName("release_date")
+    @Expose
+    private String release_date;
     @SerializedName("overview")
     @Expose
     private String overview;
