@@ -25,4 +25,7 @@ public class MovieRepository {
     public MutableLiveData<List<Result>> getMovies() {
         return movieAPIClient.getMovies();
     }
+    public void SearchMovieAPI(String query){
+        movieAPIClient.SearchMovieAPI(query);
+    }
 }

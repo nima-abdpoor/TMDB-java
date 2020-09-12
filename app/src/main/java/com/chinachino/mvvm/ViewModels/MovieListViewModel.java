@@ -17,5 +17,7 @@ public class MovieListViewModel extends ViewModel {
     public MutableLiveData<List<Result>> getMovies() {
         return movieRepository.getMovies();
     }
-
+    public void SearchMovieAPI(String query){
+        movieRepository.SearchMovieAPI(query);
+    }
 }
