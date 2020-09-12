@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.chinachino.mvvm.R;
 import com.chinachino.mvvm.models.Result;
 
@@ -35,6 +37,12 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+        RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.ic_launcher_background);
+        Glide.with(viewHolder.itemView.getContext())
+                .setDefaultRequestOptions(requestOptions)
+                .load(results.get(i))
+                .into(((MovieViewHolder)viewHolder).image);
+
         ((MovieViewHolder)viewHolder).title.setText(results.get(i).getTitle());
         ((MovieViewHolder)viewHolder).description.setText(results.get(i).getOverview());
         ((MovieViewHolder)viewHolder).socialRank.setText(String.valueOf(Math.round(results.get(i).getPopularity())));
