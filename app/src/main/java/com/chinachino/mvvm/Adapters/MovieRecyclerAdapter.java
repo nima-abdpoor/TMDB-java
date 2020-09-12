@@ -14,13 +14,16 @@ import com.chinachino.mvvm.models.Result;
 
 import java.util.List;
 
+import static com.chinachino.mvvm.Utils.Constants.API_KEY;
+import static com.chinachino.mvvm.Utils.Constants.BASE_URL;
+import static com.chinachino.mvvm.Utils.Constants.IMAGE_BASE_URL;
+
 public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private OnMovieListener onMovieListener;
     private List<Result> results;
 
-    public MovieRecyclerAdapter(OnMovieListener onMovieListener, List<Result> results) {
+    public MovieRecyclerAdapter(OnMovieListener onMovieListener) {
         this.onMovieListener = onMovieListener;
-        this.results = results;
     }
 
     @NonNull
@@ -40,16 +43,20 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.ic_launcher_background);
         Glide.with(viewHolder.itemView.getContext())
                 .setDefaultRequestOptions(requestOptions)
-                .load(results.get(i))
+                .load(IMAGE_BASE_URL+results.get(i).getPosterPath())
                 .into(((MovieViewHolder)viewHolder).image);
 
         ((MovieViewHolder)viewHolder).title.setText(results.get(i).getTitle());
-        ((MovieViewHolder)viewHolder).description.setText(results.get(i).getOverview());
+        ((MovieViewHolder)viewHolder).description.setText(results.get(i).getOriginalLanguage());
         ((MovieViewHolder)viewHolder).socialRank.setText(String.valueOf(Math.round(results.get(i).getPopularity())));
     }
 
+
     @Override
     public int getItemCount() {
-        return results.size();
+        if (results != null) {
+            return results.size();
+        }
+        return 0;
     }
 }

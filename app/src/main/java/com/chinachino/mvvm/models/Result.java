@@ -23,6 +23,18 @@ public class Result {
     @Expose
     private String overview;
 
+    public String getPosterPath() {
+        return posterPath;
+    }
+
+    public void setPosterPath(String posterPath) {
+        this.posterPath = posterPath;
+    }
+
+    @SerializedName("poster_path")
+    @Expose
+    private String posterPath;
+
     public Double getPopularity() {
         return popularity;
     }
