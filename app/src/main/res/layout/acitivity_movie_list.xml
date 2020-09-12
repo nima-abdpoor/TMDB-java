@@ -11,15 +11,23 @@
       >
       <androidx.appcompat.widget.Toolbar
           android:layout_width="match_parent"
-          android:layout_height="?attr/actionBarSize"
+          android:layout_height="wrap_content"
          android:id="@+id/toolbar"
-          app:layout_scrollFlags="scroll|enterAlways"/>
-   </com.google.android.material.appbar.AppBarLayout>
+          app:layout_scrollFlags="scroll|enterAlways">
+         <androidx.appcompat.widget.SearchView
+             android:layout_width="match_parent"
+             android:layout_height="?attr/actionBarSize"
+            android:id="@+id/search_view"
+            app:queryHint="The Good Bad Ugly..."/>
 
+      </androidx.appcompat.widget.Toolbar>
+
+   </com.google.android.material.appbar.AppBarLayout>
    <androidx.recyclerview.widget.RecyclerView
        android:layout_width="match_parent"
        android:layout_height="match_parent"
        android:id="@+id/movie_list"
+       app:layout_behavior="@string/appbar_scrolling_view_behavior"
        />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

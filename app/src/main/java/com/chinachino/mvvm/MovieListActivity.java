@@ -2,6 +2,7 @@ package com.chinachino.mvvm;
 
 import android.os.Bundle;
 
+import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,7 +25,8 @@ public class MovieListActivity extends BaseActivity implements OnMovieListener {
         mviewModel = ViewModelProviders.of(this).get(MovieListViewModel.class);
         initRecyclerView();
         subscribeObservers();
-        TestSearRetrofit("chicken");
+        SearchMovieAPI("life");
+        initSearchView();
 
     }
 
@@ -42,9 +44,21 @@ public class MovieListActivity extends BaseActivity implements OnMovieListener {
         });
     }
 
-    private void TestSearRetrofit(String query) {
-        SearchMovieAPI(query);
-    }
+   private void initSearchView(){
+        final SearchView searchView = findViewById(R.id.search_view);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                SearchMovieAPI(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+   }
 
     private void SearchMovieAPI(String query) {
         mviewModel.SearchMovieAPI(query);
