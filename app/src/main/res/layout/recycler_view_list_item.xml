@@ -20,7 +20,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/movie_image_height"
                 android:scaleType="centerCrop"
-                android:id="@+id/recipe_image"
+                android:id="@+id/movie_image"
                 android:src="@drawable/ic_launcher_background"/>
 
 
@@ -57,7 +57,7 @@
                         android:layout_weight="10"
                         android:textSize="@dimen/movie_popularity_size"
                         android:textColor="@color/red"
-                        android:id="@+id/movie_popularity_rank"
+                        android:id="@+id/movie_social_rank"
                         android:gravity="center"/>
 
 
