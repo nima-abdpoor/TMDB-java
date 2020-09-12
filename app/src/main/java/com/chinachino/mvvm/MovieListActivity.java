@@ -14,7 +14,7 @@ public class MovieListActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.acitivity_recipe_list);
+        setContentView(R.layout.acitivity_movie_list);
         mviewModel = ViewModelProviders.of(this).get(MovieListViewModel.class);
         subscribeObservers();
         TestSearRetrofit("chicken");
