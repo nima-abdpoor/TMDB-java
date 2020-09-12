@@ -1,5 +1,10 @@
 package com.chinachino.mvvm;
 
+import android.util.Log;
+
+import com.chinachino.mvvm.models.Result;
+
+import java.util.List;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 
@@ -18,5 +23,4 @@ public class AppExecutors {
     public ScheduledExecutorService getExecutorService(){
         return executorService;
     }
-
 }

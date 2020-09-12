@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chinachino.mvvm.Adapters.MovieRecyclerAdapter;
 import com.chinachino.mvvm.Adapters.OnMovieListener;
-import com.chinachino.mvvm.Utils.Testing;
 import com.chinachino.mvvm.ViewModels.MovieListViewModel;
 
 public class MovieListActivity extends BaseActivity implements OnMovieListener {
