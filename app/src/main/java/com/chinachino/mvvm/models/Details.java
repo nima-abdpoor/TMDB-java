@@ -12,9 +12,9 @@ public class Details {
     @SerializedName("backdrop_path")
     @Expose
     private String backdropPath;
-//    @SerializedName("genres")
-//    @Expose
-//    private List<Genre> genres = null;
+    @SerializedName("genres")
+    @Expose
+    private List<Genre> genres = null;
     @SerializedName("id")
     @Expose
     private Integer id;
@@ -33,12 +33,12 @@ public class Details {
     @SerializedName("poster_path")
     @Expose
     private String posterPath;
-//    @SerializedName("production_companies")
-//    @Expose
-//    private List<ProductionCompany> productionCompanies = null;
-//    @SerializedName("production_countries")
-//    @Expose
-//    private List<ProductionCountry> productionCountries = null;
+    @SerializedName("production_companies")
+    @Expose
+    private List<ProductionCompany> productionCompanies = null;
+    @SerializedName("production_countries")
+    @Expose
+    private List<ProductionCountry> productionCountries = null;
     @SerializedName("release_date")
     @Expose
     private String releaseDate;
@@ -57,12 +57,12 @@ public class Details {
     @SerializedName("video")
     @Expose
     private Boolean video;
-//    @SerializedName("vote_average")
-//    @Expose
-//    private Double voteAverage;
-//    @SerializedName("vote_count")
-//    @Expose
-//    private Integer voteCount;
+    @SerializedName("vote_average")
+    @Expose
+    private Double voteAverage;
+    @SerializedName("vote_count")
+    @Expose
+    private Integer voteCount;
 
     public Boolean getAdult() {
         return adult;
@@ -79,13 +79,13 @@ public class Details {
     public void setBackdropPath(String backdropPath) {
         this.backdropPath = backdropPath;
     }
-//    public List<Genre> getGenres() {
-//        return genres;
-//    }
-//
-//    public void setGenres(List<Genre> genres) {
-//        this.genres = genres;
-//    }
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
+    }
 
     public Integer getId() {
         return id;
@@ -135,21 +135,21 @@ public class Details {
         this.posterPath = posterPath;
     }
 
-//    public List<ProductionCompany> getProductionCompanies() {
-//        return productionCompanies;
-//    }
-//
-//    public void setProductionCompanies(List<ProductionCompany> productionCompanies) {
-//        this.productionCompanies = productionCompanies;
-//    }
-//
-//    public List<ProductionCountry> getProductionCountries() {
-//        return productionCountries;
-//    }
-//
-//    public void setProductionCountries(List<ProductionCountry> productionCountries) {
-//        this.productionCountries = productionCountries;
-//    }
+    public List<ProductionCompany> getProductionCompanies() {
+        return productionCompanies;
+    }
+
+    public void setProductionCompanies(List<ProductionCompany> productionCompanies) {
+        this.productionCompanies = productionCompanies;
+    }
+
+    public List<ProductionCountry> getProductionCountries() {
+        return productionCountries;
+    }
+
+    public void setProductionCountries(List<ProductionCountry> productionCountries) {
+        this.productionCountries = productionCountries;
+    }
 
     public String getReleaseDate() {
         return releaseDate;
@@ -199,20 +199,20 @@ public class Details {
         this.video = video;
     }
 
-//    public Double getVoteAverage() {
-//        return voteAverage;
-//    }
-//
-//    public void setVoteAverage(Double voteAverage) {
-//        this.voteAverage = voteAverage;
-//    }
-//
-//    public Integer getVoteCount() {
-//        return voteCount;
-//    }
-//
-//    public void setVoteCount(Integer voteCount) {
-//        this.voteCount = voteCount;
-//    }
+    public Double getVoteAverage() {
+        return voteAverage;
+    }
+
+    public void setVoteAverage(Double voteAverage) {
+        this.voteAverage = voteAverage;
+    }
+
+    public Integer getVoteCount() {
+        return voteCount;
+    }
+
+    public void setVoteCount(Integer voteCount) {
+        this.voteCount = voteCount;
+    }
 
 }

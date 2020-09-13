@@ -1,22 +1,29 @@
-package com.chinachino.mvvm;
+package com.chinachino.mvvm.Activities;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.chinachino.mvvm.BaseActivity;
+import com.chinachino.mvvm.R;
 import com.chinachino.mvvm.ViewModels.MovieDetailsViewModel;
 import com.chinachino.mvvm.models.Details;
+import com.chinachino.mvvm.models.Genre;
+
+import static com.chinachino.mvvm.Utils.Constants.IMAGE_BASE_URL;
 
 public class MovieDetailsActivity extends BaseActivity {
     //UI
     AppCompatImageView imageView;
-    TextView title,socialRank,overview;
+    TextView title,overview,rank,genres;
     ScrollView scrollView;
     MovieDetailsViewModel viewModel;
 
@@ -26,18 +33,20 @@ public class MovieDetailsActivity extends BaseActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
-        initViewItems();
+        ShowProgressBar(true);
+        verifyingViewItems();
         viewModel = ViewModelProviders.of(this).get(MovieDetailsViewModel.class);
         SubscribeOnObservers();
         getIncomingIntent();
     }
 
-    private void initViewItems() {
+    private void verifyingViewItems() {
         imageView = findViewById(R.id.movie_image_detail);
         title = findViewById(R.id.movie_title_detail);
         overview = findViewById(R.id.overview_title);
-        socialRank = findViewById(R.id.movie_social_score);
+        rank = findViewById(R.id.movie_vote);
         scrollView = findViewById(R.id.parent);
+        genres = findViewById(R.id.genres);
     }
 
     private void getIncomingIntent() {
@@ -51,11 +60,34 @@ public class MovieDetailsActivity extends BaseActivity {
         Log.d(TAG, "SubscribeOnObservers: ");
         viewModel.getMovieDetails().observe(this, details -> {
             if(details !=null){
-                Log.d(TAG, "onChanged: "+details.getOverview());
+               InitViewItems(details);
             }
             else{
                 Log.d(TAG, "onChanged: detail is null");
             }
         });
+    }
+
+    private void InitViewItems(Details details) {
+        String genre = "genres : ";
+        ShowProgressBar(false);
+        scrollView.setVisibility(View.VISIBLE);
+        title.setText(details.getTitle());
+        overview.setText(details.getOverview());
+        rank.setText(String.valueOf(details.getVoteAverage()));
+        for(Genre s : details.getGenres())
+             genre +="\n - " + s.getName();
+        genres.setText(genre);
+        RequestOptions requestOptions = new RequestOptions()
+                .placeholder(R.drawable.ic_launcher_background);
+        Glide.with(this)
+                .setDefaultRequestOptions(requestOptions)
+                .load(IMAGE_BASE_URL + details.getBackdropPath())
+                .into(imageView);
+    }
+
+    @Override
+    public void ShowProgressBar(boolean visibility) {
+        super.ShowProgressBar(visibility);
     }
 }

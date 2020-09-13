@@ -1,4 +1,4 @@
-package com.chinachino.mvvm;
+package com.chinachino.mvvm.Activities;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.chinachino.mvvm.Adapters.MovieRecyclerAdapter;
 import com.chinachino.mvvm.Adapters.OnMovieListener;
+import com.chinachino.mvvm.BaseActivity;
+import com.chinachino.mvvm.R;
+import com.chinachino.mvvm.Testing;
 import com.chinachino.mvvm.ViewModels.MovieListViewModel;
 
 import static com.chinachino.mvvm.Utils.Constants.DEFAULT_PAGE;

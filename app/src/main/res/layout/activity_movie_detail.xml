@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:id="@+id/parent"
-    android:visibility="gone">
+    android:visibility="visible">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,7 +16,9 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/movie_image_height"
             android:id="@+id/movie_image_detail"
-            android:scaleType="centerCrop" />
+            android:scaleType="centerCrop"
+            android:elevation="20dp"
+            />
 
         <TextView
             android:id="@+id/movie_title_detail"
@@ -49,15 +51,36 @@
                 android:text="overview"/>
 
             <TextView
-                android:id="@+id/movie_social_score"
+                android:id="@+id/movie_vote"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
                 android:textSize="@dimen/movie_popularity_size"
                 android:textColor="@color/red"
                 android:gravity="center"
-                android:text="100"/>
+                android:text=""/>
 
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="100"
+            android:layout_below="@+id/container"
+            android:id="@+id/company"
+            android:padding="10dp">
+
+            <TextView
+                android:id="@+id/genres"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="90"
+                android:textSize="@dimen/movie_popularity_size"
+                android:textStyle="bold"
+                android:layout_below="@+id/overview_title"
+                android:text="genres"/>
 
         </LinearLayout>
 
