@@ -68,6 +68,14 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((MovieViewHolder) viewHolder).releaseDate.setText(String.valueOf(results.get(i).getRelease_date()));
         }
     }
+    public Integer getMovieID(int position){
+        if (results !=null){
+            if (results.size() >0 ){
+                return results.get(position).getId();
+            }
+        }
+        return null;
+    }
 
     private String getOverview(Result result) {
         try {

@@ -1,5 +1,6 @@
 package com.chinachino.mvvm;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -78,7 +79,10 @@ public class MovieListActivity extends BaseActivity implements OnMovieListener {
 
     @Override
     public void onMovieClick(int position) {
-
+        Integer integer = adapter.getMovieID(position);
+        Intent intent = new Intent(this,MovieDetails.class);
+        intent.putExtra("MovieID",integer);
+        startActivity(intent);
     }
 
     @Override
