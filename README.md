@@ -1,2 +1,2 @@
-# Food
-REST API with MVVM and Retrofit2
+# THE MOVIE DATABASE API
+
