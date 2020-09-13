@@ -1,5 +1,6 @@
 package com.chinachino.mvvm.Adapters;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import com.chinachino.mvvm.models.Result;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.content.ContentValues.TAG;
 import static com.chinachino.mvvm.Utils.Constants.IMAGE_BASE_URL;
 
 public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -68,14 +70,24 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     }
 
     private String getOverview(Result result) {
-       return result.getOverview().substring(0,20)+"...";
+        try {
+            return result.getOverview().substring(0,20)+"...";
+        }
+        catch (StringIndexOutOfBoundsException s){
+            Log.d(TAG, "getOverview: "+s);
+        }
+        return "...";
     }
 
     @Override
     public int getItemViewType(int position) {
         if (results.get(position).getTitle().equals("LOADING...")) {
             return LOADING_TYPE;
-        } else return MOVIE_TYPE;
+        }
+        else if(position == results.size() -1 && position !=0){
+            return LOADING_TYPE;
+        }
+    else return MOVIE_TYPE;
     }
 
     public void displayLoading() {

@@ -20,7 +20,6 @@ import retrofit2.Response;
 import static com.chinachino.mvvm.Utils.Constants.API_KEY;
 import static com.chinachino.mvvm.Utils.Constants.DEFAULT_ADULT;
 import static com.chinachino.mvvm.Utils.Constants.DEFAULT_LANGUAGE;
-import static com.chinachino.mvvm.Utils.Constants.DEFAULT_PAGE;
 import static com.chinachino.mvvm.Utils.Constants.TIME_OUT;
 
 public class MovieAPIClient {
@@ -43,11 +42,11 @@ public class MovieAPIClient {
         return mutableLiveData;
     }
 
-    public void SearchMovieAPI(String query) {
+    public void SearchMovieAPI(String query,int page) {
         if (retrieveMoviesRunnable !=null){
             retrieveMoviesRunnable = null;
         }
-        retrieveMoviesRunnable = new RetrieveMoviesRunnable(query);
+        retrieveMoviesRunnable = new RetrieveMoviesRunnable(query,page);
 
         final Future handler = AppExecutors.getInstance().getExecutorService().submit(retrieveMoviesRunnable);
 
@@ -59,18 +58,20 @@ public class MovieAPIClient {
     private class RetrieveMoviesRunnable implements Runnable {
 
         private String query;
+        private int page;
         private boolean cancelRequest;
         private String TAG = "MovieAPIClient";
 
-        public RetrieveMoviesRunnable(String query) {
+        public RetrieveMoviesRunnable(String query,int page) {
             this.query = query;
+            this.page = page;
             cancelRequest = false;
         }
 
         @Override
         public void run() {
             try {
-                Response response = getMovies(this.query).execute();
+                Response response = getMovies(this.query,this.page).execute();
                 if(cancelRequest){
                     return;
                 }
@@ -88,9 +89,9 @@ public class MovieAPIClient {
                 mutableLiveData.postValue(null);
             }
         }
-        public Call<Example> getMovies(String query){
+        public Call<Example> getMovies(String query,int page){
             return ServiceGenerator.GetMovies().SearchResponse(API_KEY, DEFAULT_LANGUAGE
-                    , query, DEFAULT_PAGE, DEFAULT_ADULT);
+                    , query, page, DEFAULT_ADULT);
         }
     }
 }

@@ -12,6 +12,8 @@ import com.chinachino.mvvm.Adapters.MovieRecyclerAdapter;
 import com.chinachino.mvvm.Adapters.OnMovieListener;
 import com.chinachino.mvvm.ViewModels.MovieListViewModel;
 
+import static com.chinachino.mvvm.Utils.Constants.DEFAULT_PAGE;
+
 public class MovieListActivity extends BaseActivity implements OnMovieListener {
     private RecyclerView recyclerView;
     private static final String TAG = "RecipeListActivity";
@@ -26,7 +28,7 @@ public class MovieListActivity extends BaseActivity implements OnMovieListener {
         mviewModel = ViewModelProviders.of(this).get(MovieListViewModel.class);
         initRecyclerView();
         subscribeObservers();
-        SearchMovieAPI("life");
+        SearchMovieAPI("life",DEFAULT_PAGE);
         initSearchView();
 
     }
@@ -39,7 +41,7 @@ public class MovieListActivity extends BaseActivity implements OnMovieListener {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 if(!recyclerView.canScrollVertically(1)){
-                    //search query
+                    mviewModel.SearchNextPage();
                 }
             }
         });
@@ -59,7 +61,7 @@ public class MovieListActivity extends BaseActivity implements OnMovieListener {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 adapter.displayLoading();
-                SearchMovieAPI(query);
+                SearchMovieAPI(query,1);
                 return false;
             }
 
@@ -70,8 +72,8 @@ public class MovieListActivity extends BaseActivity implements OnMovieListener {
         });
    }
 
-    private void SearchMovieAPI(String query) {
-        mviewModel.SearchMovieAPI(query);
+    private void SearchMovieAPI(String query,int page) {
+        mviewModel.SearchMovieAPI(query,page);
     }
 
     @Override

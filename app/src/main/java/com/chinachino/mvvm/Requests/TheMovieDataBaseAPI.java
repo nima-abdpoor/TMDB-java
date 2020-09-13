@@ -12,7 +12,7 @@ public interface TheMovieDataBaseAPI {
             @Query("api_key") String key,
             @Query("language") String language,
             @Query("query") String query,
-            @Query("page") String page,
+            @Query("page") int page,
             @Query("include_adult") boolean include_adult
     );
 }
