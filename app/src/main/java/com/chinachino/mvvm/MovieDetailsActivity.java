@@ -7,20 +7,28 @@ import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProviders;
 
-public class MovieDetails extends BaseActivity {
+import com.chinachino.mvvm.ViewModels.MovieDetailsViewModel;
+import com.chinachino.mvvm.models.Details;
+
+public class MovieDetailsActivity extends BaseActivity {
     //UI
     AppCompatImageView imageView;
     TextView title,socialRank,overview;
     ScrollView scrollView;
+    MovieDetailsViewModel viewModel;
 
-    private String TAG = "MovieDetails";
+    private String TAG = "MovieDetailsActivity";
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_detail);
         initViewItems();
+        viewModel = ViewModelProviders.of(this).get(MovieDetailsViewModel.class);
+        SubscribeOnObservers();
         getIncomingIntent();
     }
 
@@ -34,8 +42,20 @@ public class MovieDetails extends BaseActivity {
 
     private void getIncomingIntent() {
         if (getIntent().hasExtra("MovieID")){
+            Log.d(TAG, "getIncomingIntent: ");
             int movieID = getIntent().getIntExtra("MovieID",0);
-            Log.d(TAG, "getIncomingIntent: "+movieID);
+            viewModel.SearchMovieDetails(movieID);
         }
+    }
+    private void SubscribeOnObservers(){
+        Log.d(TAG, "SubscribeOnObservers: ");
+        viewModel.getMovieDetails().observe(this, details -> {
+            if(details !=null){
+                Log.d(TAG, "onChanged: "+details.getOverview());
+            }
+            else{
+                Log.d(TAG, "onChanged: detail is null");
+            }
+        });
     }
 }

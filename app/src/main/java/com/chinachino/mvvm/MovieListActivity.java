@@ -42,7 +42,7 @@ public class MovieListActivity extends BaseActivity implements OnMovieListener {
             @Override
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 if(!recyclerView.canScrollVertically(1)){
-                    mviewModel.SearchNextPage();
+                    //mviewModel.SearchNextPage();
                 }
             }
         });
@@ -80,7 +80,7 @@ public class MovieListActivity extends BaseActivity implements OnMovieListener {
     @Override
     public void onMovieClick(int position) {
         Integer integer = adapter.getMovieID(position);
-        Intent intent = new Intent(this,MovieDetails.class);
+        Intent intent = new Intent(this, MovieDetailsActivity.class);
         intent.putExtra("MovieID",integer);
         startActivity(intent);
     }

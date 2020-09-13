@@ -1,6 +1,6 @@
 package com.chinachino.mvvm.ViewModels;
 
-import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.chinachino.mvvm.Repositories.MovieRepository;
@@ -18,7 +18,7 @@ public class MovieListViewModel extends ViewModel {
     public MovieListViewModel() {
         movieRepository = MovieRepository.getInstance();
     }
-    public MutableLiveData<List<Result>> getMovies() {
+    public LiveData<List<Result>> getMovies() {
         return movieRepository.getMovies();
     }
     public void SearchMovieAPI(String query,int page){
