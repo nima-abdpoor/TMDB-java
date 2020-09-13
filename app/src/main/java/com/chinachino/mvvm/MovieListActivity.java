@@ -2,6 +2,7 @@ package com.chinachino.mvvm;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.SearchView;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +35,14 @@ public class MovieListActivity extends BaseActivity implements OnMovieListener {
         adapter = new MovieRecyclerAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                if(!recyclerView.canScrollVertically(1)){
+                    //search query
+                }
+            }
+        });
     }
 
     public void subscribeObservers() {
