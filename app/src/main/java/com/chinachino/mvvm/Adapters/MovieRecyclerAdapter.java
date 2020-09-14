@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -22,13 +23,16 @@ import static com.chinachino.mvvm.Utils.Constants.IMAGE_BASE_URL;
 public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private final int MOVIE_TYPE = 1;
     private final int LOADING_TYPE = 2;
+    List<Result> OldList = new ArrayList<>();
 
     private OnMovieListener onMovieListener;
     private List<Result> results;
 
+
     public MovieRecyclerAdapter(OnMovieListener onMovieListener) {
         this.onMovieListener = onMovieListener;
     }
+
 
     @NonNull
     @Override
@@ -50,7 +54,16 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public void setResults(List<Result> results) {
         this.results = results;
+        //UpdateResulsts(results);
         notifyDataSetChanged();
+    }
+
+    private void UpdateResulsts(List<Result> results) {
+        MyDiffUtils diffUtils = new MyDiffUtils(OldList,results);
+        DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(diffUtils);
+        results.clear();
+        OldList.addAll(results);
+        diffResult.dispatchUpdatesTo(this);
     }
 
     @Override

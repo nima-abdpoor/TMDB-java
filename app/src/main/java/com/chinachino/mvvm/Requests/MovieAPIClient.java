@@ -6,6 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.chinachino.mvvm.AppExecutors;
+import com.chinachino.mvvm.Filter;
 import com.chinachino.mvvm.models.Details;
 import com.chinachino.mvvm.models.Example;
 import com.chinachino.mvvm.models.Result;
@@ -26,6 +27,7 @@ import static com.chinachino.mvvm.Utils.Constants.TIME_OUT;
 
 public class MovieAPIClient {
 
+    Filter filter;
     private static MovieAPIClient instance;
 
     private MutableLiveData<List<Result>> listMutableLiveData;
@@ -53,6 +55,7 @@ public class MovieAPIClient {
     private MovieAPIClient() {
         listMutableLiveData = new MutableLiveData<>();
         movieMutableLiveData = new MutableLiveData<>();
+        filter = new Filter();
     }
 
 
