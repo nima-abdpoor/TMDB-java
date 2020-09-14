@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/allMoviesFragment">
+
+    <fragment
+        android:id="@+id/allMoviesFragment"
+        android:name="com.chinachino.mvvm.Activities.MovieListFragment"
+        android:label="AllMoviesFragment" >
+        <action
+            android:id="@+id/action_allMoviesFragment_to_movieDetails"
+            app:destination="@id/movieDetails"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            />
+    </fragment>
+
+    <fragment
+        android:id="@+id/movieDetails"
+        android:name="com.chinachino.mvvm.Activities.MovieDetailsFragment"
+        android:label="MovieDetails">
+        <argument
+            android:name="movieID"
+            android:defaultValue="00"
+            />
+        <action
+            android:id="@+id/action_allMoviesFragment_to_movieDetails"
+            app:destination="@id/movieDetails"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            />
+    </fragment>
+
+</navigation>
