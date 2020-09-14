@@ -22,6 +22,9 @@ import com.chinachino.mvvm.R;
 import com.chinachino.mvvm.Testing;
 import com.chinachino.mvvm.ViewModels.MovieListViewModel;
 
+import java.util.Random;
+
+import static com.chinachino.mvvm.Utils.Constants.DEFAULT_MOVIE_LIST_NAME;
 import static com.chinachino.mvvm.Utils.Constants.DEFAULT_PAGE;
 
 
@@ -38,7 +41,6 @@ public class MovieListFragment extends Fragment implements OnMovieListener {
         super.onCreate(savedInstanceState);
         mviewModel = ViewModelProviders.of(this).get(MovieListViewModel.class);
         subscribeObservers();
-        SearchMovieAPI("life",DEFAULT_PAGE);
         initSearchView();
     }
 
@@ -66,11 +68,23 @@ public class MovieListFragment extends Fragment implements OnMovieListener {
             adapter.setResults(results);
         });
     }
-    private void SearchMovieAPI(String query,int page) {
-        mviewModel.SearchMovieAPI(query,page);
+    private void SearchMovieAPI(String query , int page,boolean onResume) {
+        if (onResume){
+            Random random = new Random();
+            int number = random.nextInt(9);
+            Log.d(TAG, "askjdfljsfl: "+number);
+            try {
+                mviewModel.SearchMovieAPI(DEFAULT_MOVIE_LIST_NAME[number],DEFAULT_PAGE);
+            }
+            catch (ArrayIndexOutOfBoundsException e){
+                SearchMovieAPI("error",DEFAULT_PAGE,false);
+                Log.e(TAG, "SearchMovieAPI: searchOnResume", e);
+            }
+        }
+        else {
+            mviewModel.SearchMovieAPI(query,page);
+        }
     }
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -87,7 +101,7 @@ public class MovieListFragment extends Fragment implements OnMovieListener {
             @Override
             public boolean onQueryTextSubmit(String query) {
                 adapter.displayLoading();
-                SearchMovieAPI(query,1);
+                SearchMovieAPI(query,1,false);
                 return false;
             }
 
@@ -114,5 +128,6 @@ public class MovieListFragment extends Fragment implements OnMovieListener {
     @Override
     public void onResume() {
         super.onResume();
+        SearchMovieAPI("life",DEFAULT_PAGE,true);
     }
 }
