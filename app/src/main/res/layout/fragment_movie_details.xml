@@ -28,7 +28,7 @@
             android:textColor="#000"
             android:padding="7dp"
             android:layout_below="@+id/movie_image_detail"
-            android:text="Some Recipe title"/>
+            android:text="Some Movie title"/>
 
 
         <LinearLayout
