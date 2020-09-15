@@ -16,6 +16,10 @@ public class MovieDetailsRepository {
         return instance;
     }
 
+    public LiveData<Boolean> isRequestTimeOut(){
+        return movieAPIClient.isRequestTimeOut();
+    }
+
     private MovieDetailsRepository() {
         movieAPIClient = MovieAPIClient.getInstance();
     }

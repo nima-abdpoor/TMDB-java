@@ -17,12 +17,17 @@ import com.chinachino.mvvm.models.Result;
 import java.util.ArrayList;
 import java.util.List;
 
-import static android.content.ContentValues.TAG;
+
 import static com.chinachino.mvvm.Utils.Constants.IMAGE_BASE_URL;
 
 public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
+    private static final String TAG = "RecyclerView";
     private final int MOVIE_TYPE = 1;
     private final int LOADING_TYPE = 2;
+    private final int ERROR_TYPE = 3;
+
+    private boolean error;
+
     List<Result> OldList = new ArrayList<>();
 
     private OnMovieListener onMovieListener;
@@ -37,25 +42,42 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
+        Log.d(TAG, "onCreateViewHolder: "+i);
         View view;
         switch (i) {
             case LOADING_TYPE: {
                 view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.list_item_loading, viewGroup, false);
                 return new LoadingViewHolder(view);
             }
-            case MOVIE_TYPE:
-            default: {
+            case MOVIE_TYPE: {
                 view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.recycler_view_list_item, viewGroup, false);
                 return new MovieViewHolder(view, onMovieListener);
+            }
+            default:
+            case ERROR_TYPE:{
+                view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.error_in_list_movies,viewGroup,false);
+                return new ErrorViewHolder(view);
             }
         }
 
     }
+    public void ShowErrorResult(){
+        error = true;
+        notifyDataSetChanged();
+        Log.d(TAG, "ShowErrorResult: err");
+    }
 
     public void setResults(List<Result> results) {
-        this.results = results;
-        //UpdateResulsts(results);
-        notifyDataSetChanged();
+        if (results != null){
+            error = false;
+            this.results = results;
+            //UpdateResulsts(results);
+            notifyDataSetChanged();
+        }
+        else {
+            ShowErrorResult();
+            notifyDataSetChanged();
+        }
     }
 
     private void UpdateResulsts(List<Result> results) {
@@ -68,6 +90,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerView.ViewHolder viewHolder, int i) {
+        Log.d(TAG, "onBindViewHolder: ");
         int itemViewType = getItemViewType(i);
         if (itemViewType == MOVIE_TYPE) {
             RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.ic_launcher_background);
@@ -79,6 +102,15 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             ((MovieViewHolder) viewHolder).title.setText(results.get(i).getTitle());
             ((MovieViewHolder) viewHolder).description.setText(getOverview(results.get(i)));
             ((MovieViewHolder) viewHolder).releaseDate.setText(String.valueOf(results.get(i).getRelease_date()));
+        }
+        if (itemViewType == ERROR_TYPE){
+            ((ErrorViewHolder) viewHolder).error.setText("Check Your Internet Connection!");
+            ((ErrorViewHolder) viewHolder).button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
         }
     }
     public Integer getMovieID(int position){
@@ -103,10 +135,15 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     @Override
     public int getItemViewType(int position) {
         if (results.get(position).getTitle().equals("LOADING...")) {
+            error = false;
             return LOADING_TYPE;
         }
         else if(position == results.size() -1 && position !=0){
+            error = false;
             return LOADING_TYPE;
+        }
+        else if(error){
+            return ERROR_TYPE;
         }
     else return MOVIE_TYPE;
     }

@@ -5,7 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-import com.chinachino.mvvm.AppExecutors;
+import com.chinachino.mvvm.Executors.AppExecutors;
 import com.chinachino.mvvm.Filter;
 import com.chinachino.mvvm.models.Details;
 import com.chinachino.mvvm.models.Example;
@@ -33,9 +33,16 @@ public class MovieAPIClient {
     private MutableLiveData<List<Result>> listMutableLiveData;
     private MutableLiveData<Details> movieMutableLiveData;
 
+    private MutableLiveData<Boolean> RequestTimeOut;
+
+
     private RetrieveMovieDetailsRunnable movieDetailsRunnable;
     private RetrieveMoviesRunnable retrieveMoviesRunnable;
 
+
+    public LiveData<Boolean> isRequestTimeOut(){
+        return RequestTimeOut;
+    }
 
     public LiveData<List<Result>> getMovies() {
         return listMutableLiveData;
@@ -55,12 +62,14 @@ public class MovieAPIClient {
     private MovieAPIClient() {
         listMutableLiveData = new MutableLiveData<>();
         movieMutableLiveData = new MutableLiveData<>();
-        filter = new Filter();
+        RequestTimeOut  = new MutableLiveData<>();
+        //filter = new Filter();
     }
 
 
 
     public void SearchMovieAPI(String query, int page) {
+        RequestTimeOut.postValue(false);
         if (retrieveMoviesRunnable != null) {
             retrieveMoviesRunnable = null;
         }
@@ -69,10 +78,12 @@ public class MovieAPIClient {
         final Future handler = AppExecutors.getInstance().getExecutorService().submit(retrieveMoviesRunnable);
 
         AppExecutors.getInstance().getExecutorService().schedule(() -> {
+            RequestTimeOut.postValue(true);
             handler.cancel(true);
         }, TIME_OUT, TimeUnit.SECONDS);
     }
     public void SearchMovieID(int movieID) {
+        RequestTimeOut.postValue(false);
         if (movieDetailsRunnable != null) {
             movieDetailsRunnable = null;
         }
@@ -81,6 +92,7 @@ public class MovieAPIClient {
         final Future handler = AppExecutors.getInstance().getExecutorService().submit(movieDetailsRunnable);
 
         AppExecutors.getInstance().getExecutorService().schedule(() -> {
+            RequestTimeOut.postValue(true);
             handler.cancel(true);
         }, TIME_OUT, TimeUnit.SECONDS);
     }

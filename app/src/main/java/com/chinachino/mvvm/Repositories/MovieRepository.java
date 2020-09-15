@@ -43,4 +43,7 @@ public class MovieRepository {
     public void SearchNextQuery(){
         movieAPIClient.SearchMovieAPI(this.query,this.pageNumber+1);
     }
+    public LiveData<Boolean> isRequestTimeOut(){
+        return movieAPIClient.isRequestTimeOut();
+    }
 }

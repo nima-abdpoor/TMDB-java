@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chinachino.mvvm.R;
 
 public class MovieViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-    TextView title, description, releaseDate;
+    TextView title, description, releaseDate,error;
     AppCompatImageView image;
     OnMovieListener onMovieListener;
 

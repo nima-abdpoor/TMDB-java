@@ -1,4 +1,4 @@
-package com.chinachino.mvvm.Activities;
+package com.chinachino.mvvm.Fragments;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
@@ -63,9 +64,23 @@ public class MovieListFragment extends Fragment implements OnMovieListener {
 
     public void subscribeObservers() {
         mviewModel.getMovies().observe(this, results -> {
-            if (results != null)
+            if (results != null) {
                 Testing.Test(results, TAG);
-            adapter.setResults(results);
+                mviewModel.setMovieRetrieved(true);
+                adapter.setResults(results);
+            }
+            else {
+                mviewModel.setMovieRetrieved(false);
+            }
+        });
+        mviewModel.isRequestTimedOut().observe(this, new Observer<Boolean>() {
+            @Override
+            public void onChanged(Boolean aBoolean) {
+                if (aBoolean && !mviewModel.isMovieRetrieved()){
+                    Log.d(TAG, "onChanged: Connection Timed Out!");
+                    adapter.ShowErrorResult();
+                }
+            }
         });
     }
     private void SearchMovieAPI(String query , int page,boolean onResume) {

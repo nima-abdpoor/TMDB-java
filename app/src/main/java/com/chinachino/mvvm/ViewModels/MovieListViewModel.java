@@ -11,6 +11,16 @@ import java.util.List;
 public class MovieListViewModel extends ViewModel {
     private MovieRepository movieRepository;
 
+    public boolean isMovieRetrieved() {
+        return isMovieRetrieved;
+    }
+
+    public void setMovieRetrieved(boolean movieRetrieved) {
+        isMovieRetrieved = movieRetrieved;
+    }
+
+    private boolean isMovieRetrieved = false;
+
     public void SearchNextPage(){
         movieRepository.SearchNextQuery();
     }
@@ -23,5 +33,8 @@ public class MovieListViewModel extends ViewModel {
     }
     public void SearchMovieAPI(String query,int page){
         movieRepository.SearchMovieAPI(query,page);
+    }
+    public LiveData<Boolean> isRequestTimedOut(){
+        return movieRepository.isRequestTimeOut();
     }
 }

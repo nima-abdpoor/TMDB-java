@@ -1,4 +1,4 @@
-package com.chinachino.mvvm.Activities;
+package com.chinachino.mvvm.Fragments;
 
 import android.os.Bundle;
 
@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
 import android.util.Log;
@@ -59,12 +60,35 @@ public class MovieDetailsFragment extends Fragment {
         viewModel.getMovieDetails().observe(this, details -> {
             if(details !=null){
                 InitViewItems(details);
+                viewModel.setMovieRetrieved(true);
             }
             else{
                 Log.d(TAG, "onChanged: detail is null");
             }
         });
+       viewModel.isRequestTimedOut().observe(this, new Observer<Boolean>() {
+           @Override
+           public void onChanged(Boolean aBoolean) {
+               if(aBoolean && !viewModel.isMovieRetrieved()){
+                   Log.d(TAG, "onChanged: Connection Timed Out... ");
+                   ShowErrorMessage("ConnectionTimedOut!");
+               }
+           }
+       });
     }
+    private void ShowErrorMessage(String error) {
+        title.setText(error);
+        title.setTextSize(20f);
+        overview.setText("");
+        rank.setText("");
+        genres.setText("");
+        Glide.with(this)
+                .load(R.drawable.ic_launcher_background)
+                .into(imageView);
+    }
+
+
+
     private void InitViewItems(Details details) {
         String genre = "genres : ";
         scrollView.setVisibility(View.VISIBLE);

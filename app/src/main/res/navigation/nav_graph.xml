@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/movieListFragment"
-        android:name="com.chinachino.mvvm.Activities.MovieListFragment"
+        android:name="com.chinachino.mvvm.Fragments.MovieListFragment"
         android:label="MovieListFragment" >
         <action
             android:id="@+id/action_movieListFragment_to_movieDetailsFragment"
@@ -21,7 +21,7 @@
 
     <fragment
         android:id="@+id/movieDetailsFragment"
-        android:name="com.chinachino.mvvm.Activities.MovieDetailsFragment"
+        android:name="com.chinachino.mvvm.Fragments.MovieDetailsFragment"
         android:label="MovieDetailsFragment"
         >
         <argument
