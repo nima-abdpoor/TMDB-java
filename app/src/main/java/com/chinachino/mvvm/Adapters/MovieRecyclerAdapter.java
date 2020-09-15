@@ -1,9 +1,11 @@
 package com.chinachino.mvvm.Adapters;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
@@ -61,7 +63,8 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         }
 
     }
-    public void ShowErrorResult(){
+    public void ShowErrorResult(Context context){
+        Toast.makeText(context,"check Internet Connection",Toast.LENGTH_SHORT).show();
         error = true;
         notifyDataSetChanged();
         Log.d(TAG, "ShowErrorResult: err");
@@ -72,10 +75,6 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
             error = false;
             this.results = results;
             //UpdateResulsts(results);
-            notifyDataSetChanged();
-        }
-        else {
-            ShowErrorResult();
             notifyDataSetChanged();
         }
     }

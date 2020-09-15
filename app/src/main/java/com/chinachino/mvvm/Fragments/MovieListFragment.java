@@ -78,7 +78,7 @@ public class MovieListFragment extends Fragment implements OnMovieListener {
             public void onChanged(Boolean aBoolean) {
                 if (aBoolean && !mviewModel.isMovieRetrieved()){
                     Log.d(TAG, "onChanged: Connection Timed Out!");
-                    adapter.ShowErrorResult();
+                    adapter.ShowErrorResult(getContext());
                 }
             }
         });
