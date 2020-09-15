@@ -134,16 +134,16 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     @Override
     public int getItemViewType(int position) {
-        if (results.get(position).getTitle().equals("LOADING...")) {
+        if(error){
+            return ERROR_TYPE;
+        }
+        else if (results.get(position).getTitle().equals("LOADING...")) {
             error = false;
             return LOADING_TYPE;
         }
         else if(position == results.size() -1 && position !=0){
             error = false;
             return LOADING_TYPE;
-        }
-        else if(error){
-            return ERROR_TYPE;
         }
     else return MOVIE_TYPE;
     }
