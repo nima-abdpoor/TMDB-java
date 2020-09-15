@@ -9,13 +9,15 @@
  
 # Technologies
  - MVVM architecture
+ - Navigaion Components with animation
+ - ~~DiffUtils~~
  - Retrofit2
  - RecyclerView
  - Executors
  
 # Refrence
  - [coding with mitch course](https://codingwithmitch.com/courses/rest-api-mvvm-retrofit2/)
- -
+ 
 
 # Future
  - getting and saving recommendations of selected movie(dettails of movies) to show theme when onResume Called.
