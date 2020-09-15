@@ -1,6 +1,8 @@
 # THE MOVIE DATABASE API
 
   ![first page](https://github.com/nima-abdpoor/TMBD/blob/master/app/src/main/res/raw/1.jpg)
+  ![first page](https://github.com/nima-abdpoor/TMBD/blob/master/app/src/main/res/raw/2.jpg)
+  ![first page](https://github.com/nima-abdpoor/TMBD/blob/master/app/src/main/res/raw/3.jpg)
 
 # Features
  - Search Movie name 
