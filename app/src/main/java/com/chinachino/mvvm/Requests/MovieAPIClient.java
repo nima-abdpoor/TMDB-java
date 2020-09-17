@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.chinachino.mvvm.Executors.AppExecutors;
-import com.chinachino.mvvm.Filter;
+import com.chinachino.mvvm.Scheduler;
 import com.chinachino.mvvm.models.Details;
 import com.chinachino.mvvm.models.Example;
 import com.chinachino.mvvm.models.Result;
@@ -15,7 +15,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
-import java.util.concurrent.TimeUnit;
 
 import retrofit2.Call;
 import retrofit2.Response;
@@ -23,11 +22,9 @@ import retrofit2.Response;
 import static com.chinachino.mvvm.Utils.Constants.API_KEY;
 import static com.chinachino.mvvm.Utils.Constants.DEFAULT_ADULT;
 import static com.chinachino.mvvm.Utils.Constants.DEFAULT_LANGUAGE;
-import static com.chinachino.mvvm.Utils.Constants.TIME_OUT;
 
 public class MovieAPIClient {
 
-    Filter filter;
     private static MovieAPIClient instance;
 
     private MutableLiveData<List<Result>> listMutableLiveData;
@@ -39,6 +36,22 @@ public class MovieAPIClient {
     private RetrieveMovieDetailsRunnable movieDetailsRunnable;
     private RetrieveMoviesRunnable retrieveMoviesRunnable;
 
+
+    Scheduler scheduler;
+
+    public static MovieAPIClient getInstance() {
+        if (instance == null) {
+            instance = new MovieAPIClient();
+        }
+        return instance;
+    }
+
+    private MovieAPIClient() {
+        listMutableLiveData = new MutableLiveData<>();
+        movieMutableLiveData = new MutableLiveData<>();
+        RequestTimeOut  = new MutableLiveData<>();
+        scheduler = new Scheduler();
+    }
 
     public LiveData<Boolean> isRequestTimeOut(){
         return RequestTimeOut;
@@ -52,20 +65,6 @@ public class MovieAPIClient {
         return movieMutableLiveData;
     }
 
-    public static MovieAPIClient getInstance() {
-        if (instance == null) {
-            instance = new MovieAPIClient();
-        }
-        return instance;
-    }
-
-    private MovieAPIClient() {
-        listMutableLiveData = new MutableLiveData<>();
-        movieMutableLiveData = new MutableLiveData<>();
-        RequestTimeOut  = new MutableLiveData<>();
-        //filter = new Filter();
-    }
-
 
 
     public void SearchMovieAPI(String query, int page) {
@@ -77,10 +76,8 @@ public class MovieAPIClient {
 
         final Future handler = AppExecutors.getInstance().getExecutorService().submit(retrieveMoviesRunnable);
 
-        AppExecutors.getInstance().getExecutorService().schedule(() -> {
-            RequestTimeOut.postValue(true);
-            handler.cancel(true);
-        }, TIME_OUT, TimeUnit.SECONDS);
+        scheduler.Schedule(handler,RequestTimeOut);
+
     }
     public void SearchMovieID(int movieID) {
         RequestTimeOut.postValue(false);
@@ -91,10 +88,7 @@ public class MovieAPIClient {
 
         final Future handler = AppExecutors.getInstance().getExecutorService().submit(movieDetailsRunnable);
 
-        AppExecutors.getInstance().getExecutorService().schedule(() -> {
-            RequestTimeOut.postValue(true);
-            handler.cancel(true);
-        }, TIME_OUT, TimeUnit.SECONDS);
+        scheduler.Schedule(handler,RequestTimeOut);
     }
 
     private class RetrieveMoviesRunnable implements Runnable {
@@ -103,6 +97,7 @@ public class MovieAPIClient {
         private int page;
         private boolean cancelRequest;
         private String TAG = "MovieAPIClient";
+        List<Result> results;
 
         public RetrieveMoviesRunnable(String query, int page) {
             this.query = query;
@@ -118,7 +113,9 @@ public class MovieAPIClient {
                     return;
                 }
                 if (response.code() == 200) {
-                    List<Result> results = new ArrayList<>(((Example) response.body()).getResults());
+                    if (page == 1)
+                        results = new ArrayList<>(((Example) response.body()).getResults());
+                    else results.add((Result) ((Example)(response.body())).getResults());
                     listMutableLiveData.postValue(results);
                 } else {
                     String error = response.errorBody().toString();
