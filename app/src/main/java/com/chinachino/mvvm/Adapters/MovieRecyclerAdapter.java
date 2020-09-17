@@ -11,7 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.chinachino.mvvm.DrawGlide;
+import com.chinachino.mvvm.UIHelpers.DrawGlide;
 import com.chinachino.mvvm.R;
 import com.chinachino.mvvm.models.Result;
 
@@ -21,7 +21,6 @@ import java.util.List;
 
 import static com.chinachino.mvvm.Utils.Constants.DEFAULT_IMAGE_REQUEST;
 import static com.chinachino.mvvm.Utils.Constants.IMAGE_BASE_URL;
-import static com.chinachino.mvvm.Utils.Constants.DEFAULT_IMAGE;
 
 public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private static final String TAG = "RecyclerView";

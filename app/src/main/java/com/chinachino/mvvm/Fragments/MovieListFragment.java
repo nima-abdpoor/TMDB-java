@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chinachino.mvvm.Adapters.MovieRecyclerAdapter;
 import com.chinachino.mvvm.Adapters.OnMovieListener;
 import com.chinachino.mvvm.R;
-import com.chinachino.mvvm.Testing;
+import com.chinachino.mvvm.Testing.Testing;
 import com.chinachino.mvvm.ViewModels.MovieListViewModel;
 
 import java.util.Random;

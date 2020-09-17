@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.chinachino.mvvm.DrawGlide;
+import com.chinachino.mvvm.UIHelpers.DrawGlide;
 import com.chinachino.mvvm.R;
 import com.chinachino.mvvm.ViewModels.MovieDetailsViewModel;
 import com.chinachino.mvvm.models.Details;

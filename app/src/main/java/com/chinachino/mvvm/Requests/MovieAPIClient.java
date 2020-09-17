@@ -6,7 +6,6 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.chinachino.mvvm.Executors.AppExecutors;
-import com.chinachino.mvvm.Scheduler;
 import com.chinachino.mvvm.models.Details;
 import com.chinachino.mvvm.models.Example;
 import com.chinachino.mvvm.models.Result;

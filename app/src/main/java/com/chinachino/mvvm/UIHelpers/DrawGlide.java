@@ -1,4 +1,4 @@
-package com.chinachino.mvvm;
+package com.chinachino.mvvm.UIHelpers;
 
 import android.content.Context;
 import android.widget.ImageView;
