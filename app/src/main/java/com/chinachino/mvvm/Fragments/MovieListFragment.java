@@ -20,7 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.chinachino.mvvm.Adapters.MovieRecyclerAdapter;
 import com.chinachino.mvvm.Adapters.OnMovieListener;
 import com.chinachino.mvvm.R;
-import com.chinachino.mvvm.Testing;
+import com.chinachino.mvvm.Testing.Testing;
 import com.chinachino.mvvm.ViewModels.MovieListViewModel;
 
 import java.util.Random;
@@ -84,22 +84,25 @@ public class MovieListFragment extends Fragment implements OnMovieListener {
         });
     }
     private void SearchMovieAPI(String query , int page,boolean onResume) {
-        if (onResume){
-            Random random = new Random();
-            int number = random.nextInt(9);
-            Log.d(TAG, "askjdfljsfl: "+number);
-            try {
-                mviewModel.SearchMovieAPI(DEFAULT_MOVIE_LIST_NAME[number],DEFAULT_PAGE);
-            }
-            catch (ArrayIndexOutOfBoundsException e){
-                SearchMovieAPI("error",DEFAULT_PAGE,false);
-                Log.e(TAG, "SearchMovieAPI: searchOnResume", e);
-            }
-        }
-        else {
+        if (onResume)
+            loadFirstPage();
+        else
             mviewModel.SearchMovieAPI(query,page);
+    }
+
+    private void loadFirstPage() {
+        Random random = new Random();
+        int number = random.nextInt(9);
+        Log.d(TAG, "RandomNumber: "+number);
+        try {
+            mviewModel.SearchMovieAPI(DEFAULT_MOVIE_LIST_NAME[number],DEFAULT_PAGE);
+        }
+        catch (ArrayIndexOutOfBoundsException e){
+            SearchMovieAPI("error",DEFAULT_PAGE,false);
+            Log.e(TAG, "SearchMovieAPI: searchOnResume", e);
         }
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {

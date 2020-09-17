@@ -11,8 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.DiffUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+import com.chinachino.mvvm.UIHelpers.DrawGlide;
 import com.chinachino.mvvm.R;
 import com.chinachino.mvvm.models.Result;
 
@@ -20,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+import static com.chinachino.mvvm.Utils.Constants.DEFAULT_IMAGE_REQUEST;
 import static com.chinachino.mvvm.Utils.Constants.IMAGE_BASE_URL;
 
 public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
@@ -29,6 +29,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
     private final int ERROR_TYPE = 3;
 
     private boolean error;
+     DrawGlide drawGlide;
 
     List<Result> OldList = new ArrayList<>();
 
@@ -38,6 +39,7 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
 
     public MovieRecyclerAdapter(OnMovieListener onMovieListener) {
         this.onMovieListener = onMovieListener;
+        drawGlide = new DrawGlide();
     }
 
 
@@ -92,11 +94,11 @@ public class MovieRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.View
         Log.d(TAG, "onBindViewHolder: ");
         int itemViewType = getItemViewType(i);
         if (itemViewType == MOVIE_TYPE) {
-            RequestOptions requestOptions = new RequestOptions().placeholder(R.drawable.ic_launcher_background);
-            Glide.with(viewHolder.itemView.getContext())
-                    .setDefaultRequestOptions(requestOptions)
-                    .load(IMAGE_BASE_URL + results.get(i).getPosterPath())
-                    .into(((MovieViewHolder) viewHolder).image);
+            drawGlide.draw(
+                    viewHolder.itemView.getContext(),
+                    DEFAULT_IMAGE_REQUEST,
+                    IMAGE_BASE_URL + results.get(i).getPosterPath(),
+                    ((MovieViewHolder) viewHolder).image);
 
             ((MovieViewHolder) viewHolder).title.setText(results.get(i).getTitle());
             ((MovieViewHolder) viewHolder).description.setText(getOverview(results.get(i)));

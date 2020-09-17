@@ -1,6 +1,12 @@
 package com.chinachino.mvvm.Fragments;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -9,20 +15,14 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ScrollView;
-import android.widget.TextView;
-
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.RequestOptions;
+import com.chinachino.mvvm.UIHelpers.DrawGlide;
 import com.chinachino.mvvm.R;
 import com.chinachino.mvvm.ViewModels.MovieDetailsViewModel;
 import com.chinachino.mvvm.models.Details;
 import com.chinachino.mvvm.models.Genre;
 
+import static com.chinachino.mvvm.Utils.Constants.DEFAULT_IMAGE;
+import static com.chinachino.mvvm.Utils.Constants.DEFAULT_IMAGE_REQUEST;
 import static com.chinachino.mvvm.Utils.Constants.IMAGE_BASE_URL;
 
 
@@ -33,6 +33,9 @@ public class MovieDetailsFragment extends Fragment {
     ScrollView scrollView;
     MovieDetailsViewModel viewModel;
 
+    //image
+    private DrawGlide drawGlide;
+
     private String TAG = "MovieDetailsActivity";
 
     int movieID;
@@ -42,9 +45,15 @@ public class MovieDetailsFragment extends Fragment {
         super.onCreate(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(MovieDetailsViewModel.class);
         movieID = getArguments().getInt("movieID");
+        instance();
         SearchMovieDetails();
         SubscribeOnObservers();
     }
+
+    private void instance() {
+        drawGlide = new DrawGlide();
+    }
+
     public void SearchMovieDetails(){
         viewModel.SearchMovieDetails(movieID);
     }
@@ -82,9 +91,7 @@ public class MovieDetailsFragment extends Fragment {
         overview.setText("");
         rank.setText("");
         genres.setText("");
-        Glide.with(this)
-                .load(R.drawable.ic_launcher_background)
-                .into(imageView);
+        drawGlide.draw(getContext(), DEFAULT_IMAGE_REQUEST,DEFAULT_IMAGE,imageView);
     }
 
 
@@ -98,12 +105,13 @@ public class MovieDetailsFragment extends Fragment {
         for(Genre s : details.getGenres())
             genre +="\n - " + s.getName();
         genres.setText(genre);
-        RequestOptions requestOptions = new RequestOptions()
-                .placeholder(R.drawable.ic_launcher_background);
-        Glide.with(this)
-                .setDefaultRequestOptions(requestOptions)
-                .load(IMAGE_BASE_URL + details.getBackdropPath())
-                .into(imageView);
+
+        drawGlide.draw(
+                getContext(),
+                DEFAULT_IMAGE_REQUEST,
+                IMAGE_BASE_URL + details.getBackdropPath(),
+                imageView);
+
     }
 
     @Override

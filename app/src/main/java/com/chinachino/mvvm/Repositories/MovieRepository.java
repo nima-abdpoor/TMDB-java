@@ -1,7 +1,6 @@
 package com.chinachino.mvvm.Repositories;
 
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
 
 import com.chinachino.mvvm.Requests.MovieAPIClient;
 import com.chinachino.mvvm.models.Details;
