@@ -1,5 +1,8 @@
 package com.chinachino.mvvm.Utils;
 
+import com.bumptech.glide.request.RequestOptions;
+import com.chinachino.mvvm.R;
+
 public class Constants {
 
     public static final String BASE_URL = "https://api.themoviedb.org/3/";
@@ -11,4 +14,6 @@ public class Constants {
     public static final boolean DEFAULT_ADULT = false;
     public static final String[] DEFAULT_MOVIE_LIST_NAME = {"life","toy"
             ,"war","nature","nina","big","peace","rain","murder"};
+    public static RequestOptions DEFAULT_IMAGE_REQUEST = new RequestOptions().placeholder(R.drawable.ic_launcher_background);
+    public static String DEFAULT_IMAGE = String.valueOf(R.drawable.ic_launcher_background);
 }
