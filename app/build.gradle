@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+
 
 android {
     compileSdkVersion 29
@@ -11,8 +11,15 @@ android {
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
-
+        multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        lintOptions {
+            checkReleaseBuilds false
+        }
+        dependencies {
+            compile 'com.android.support:multidex:1.0.0'
+        }
     }
 
     buildTypes {
