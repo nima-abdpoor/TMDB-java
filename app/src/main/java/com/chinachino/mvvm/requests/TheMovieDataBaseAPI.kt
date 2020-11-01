@@ -15,7 +15,7 @@ interface TheMovieDataBaseAPI {
             @Query("query") query: String?,
             @Query("page") page: Int,
             @Query("include_adult") include_adult: Boolean
-    ): Call<Example?>?
+    ): Call<Example>
 
     @GET("movie/{movieID}")
     fun getMovieDetails(

@@ -76,7 +76,7 @@ class MovieAPIClient {
             }
         }
 
-        fun getMovies(query: String, page: Int): Call<Example?>? {
+        fun getMovies(query: String, page: Int): Call<Example> {
             return ServiceGenerator.getMovies().searchResponse(Constants.API_KEY, Constants.DEFAULT_LANGUAGE, query, page, Constants.DEFAULT_ADULT)
         }
 
