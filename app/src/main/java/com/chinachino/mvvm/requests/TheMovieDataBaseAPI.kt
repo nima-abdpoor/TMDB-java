@@ -22,5 +22,5 @@ interface TheMovieDataBaseAPI {
             @Path("movieID") movieID: Int,
             @Query("api_key") key: String?,
             @Query("language") language: String?
-    ): Call<Details?>?
+    ): Call<Details>
 }

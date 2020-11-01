@@ -7,7 +7,7 @@ import java.util.concurrent.Future
 import java.util.concurrent.TimeUnit
 
 class Scheduler {
-    fun schedule(future: Future<*>, RequestTimeOut: MutableLiveData<Boolean?>) {
+    fun schedule(future: Future<*>, RequestTimeOut: MutableLiveData<Boolean>) {
         AppExecutors.executorService.schedule({
             RequestTimeOut.postValue(true)
             future.cancel(true)

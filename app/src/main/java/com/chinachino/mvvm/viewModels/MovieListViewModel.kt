@@ -1,4 +1,4 @@
-package com.chinachino.mvvm.viewModels
+package com.chinachino.mvvm.ViewModels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +8,7 @@ import com.chinachino.mvvm.repositories.MovieRepository
 class MovieListViewModel : ViewModel() {
     private val movieRepository: MovieRepository = MovieRepository
     var isMovieRetrieved = false
+
     fun searchNextPage() {
         movieRepository.searchNextQuery()
     }
@@ -15,8 +16,11 @@ class MovieListViewModel : ViewModel() {
     val movies: LiveData<List<Result>>
         get() = movieRepository.movies
 
-    fun searchMovieAPI(query: String?, page: Int) {
+    fun searchMovieAPI(query: String, page: Int) {
         movieRepository.searchMovieAPI(query, page)
     }
+
+    val isRequestTimedOut: LiveData<Boolean>
+        get() = movieRepository.isRequestTimedOut
 
 }

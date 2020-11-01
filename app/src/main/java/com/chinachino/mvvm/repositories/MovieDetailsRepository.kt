@@ -5,18 +5,26 @@ import com.chinachino.mvvm.requests.MovieAPIClient
 import com.chinachino.mvvm.models.Details
 
 //
-object MovieDetailsRepository {
-    private val movieAPIClient: MovieAPIClient = MovieAPIClient.instance
-    val isRequestTimedOut: LiveData<Boolean>
-        get() = movieAPIClient.isRequestTimeOut
-get() {
-        return movieRepository.isRequestTimeOut
-    }
-    val movieDetails: LiveData<Details>
+class MovieDetailsRepository private constructor() {
+    private val movieAPIClient: MovieAPIClient = MovieAPIClient()
+    val isRequestTimeOut: LiveData<Boolean>
+        get() = movieAPIClient.isRequestTimeOut()
+    val movieDetails: LiveData<Details?>
         get() = movieAPIClient.movieDetails
 
     fun searchMovieDetails(movieID: Int) {
-        movieAPIClient.SearchMovieID(movieID)
+        movieAPIClient.searchMovieID(movieID)
+    }
+
+    companion object {
+        var instance: MovieDetailsRepository? = null
+            get() {
+                if (field == null) {
+                    field = MovieDetailsRepository()
+                }
+                return field
+            }
+            private set
     }
 
 }

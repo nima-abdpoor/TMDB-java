@@ -6,33 +6,31 @@ import com.chinachino.mvvm.models.Details
 import com.chinachino.mvvm.models.Result
 
 object MovieRepository  {
-    private val movieAPIClient: MovieAPIClient = MovieAPIClient.instance
-    private var query: String? = null
+    private val movieAPIClient: MovieAPIClient = MovieAPIClient()
+    private var  query = ""
     private var pageNumber = 0
     val movies: LiveData<List<Result>>
         get() = movieAPIClient.movies
-    val movieDetails: LiveData<Details>
+    val movieDetails: LiveData<Details?>
         get() = movieAPIClient.movieDetails
 
-    fun searchMovieAPI(query: String?, page: Int) {
+    fun searchMovieAPI(query: String, page: Int) {
         this.query = query
         pageNumber = page
-        movieAPIClient.SearchMovieAPI(query, page)
+        movieAPIClient.searchMovieAPI(query, page)
     }
 
     fun searchMovieDetails(movieID: Int) {
-        movieAPIClient.SearchMovieID(movieID)
+        movieAPIClient.searchMovieID(movieID)
     }
 
     fun searchNextQuery() {
-        movieAPIClient.SearchMovieAPI(query, pageNumber + 1)
+        movieAPIClient.searchMovieAPI(query, pageNumber + 1)
     }
 
     val isRequestTimedOut: LiveData<Boolean>
-        get() = movieAPIClient.isRequestTimeOut
-get() {
-        return movieRepository.isRequestTimeOut
-    }
+        get() = movieAPIClient.isRequestTimeOut()
+
 
 
 }

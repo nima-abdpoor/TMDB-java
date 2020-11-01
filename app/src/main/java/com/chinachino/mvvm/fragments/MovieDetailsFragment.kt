@@ -11,9 +11,9 @@ import androidx.appcompat.widget.AppCompatImageView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.chinachino.mvvm.R
+import com.chinachino.mvvm.ViewModels.MovieDetailsViewModel
 import com.chinachino.mvvm.uiHelpers.DrawGlide
 import com.chinachino.mvvm.utils.Constants
-import com.chinachino.mvvm.viewModels.MovieDetailsViewModel
 import com.chinachino.mvvm.models.Details
 
 class MovieDetailsFragment : Fragment() {
@@ -35,15 +35,15 @@ class MovieDetailsFragment : Fragment() {
         viewModel = ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
         movieID = requireArguments().getInt("movieID")
         instance()
-        SearchMovieDetails()
-        SubscribeOnObservers()
+        searchMovieDetails()
+        subscribeOnObservers()
     }
 
     private fun instance() {
         drawGlide = DrawGlide()
     }
 
-    fun SearchMovieDetails() {
+    private fun searchMovieDetails() {
         viewModel!!.searchMovieDetails(movieID)
     }
 
@@ -52,11 +52,11 @@ class MovieDetailsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_movie_details, container, false)
     }
 
-    private fun SubscribeOnObservers() {
+    private fun subscribeOnObservers() {
         Log.d(TAG, "SubscribeOnObservers: ")
         viewModel!!.movieDetails.observe(this, { details: Details? ->
             if (details != null) {
-                InitViewItems(details)
+                initViewItems(details)
                 viewModel!!.isMovieRetrieved = true
             } else {
                 Log.d(TAG, "onChanged: detail is null")
@@ -65,12 +65,12 @@ class MovieDetailsFragment : Fragment() {
         viewModel!!.isRequestTimedOut.observe(this, { aBoolean ->
             if (aBoolean && !viewModel!!.isMovieRetrieved) {
                 Log.d(TAG, "onChanged: Connection Timed Out... ")
-                ShowErrorMessage("ConnectionTimedOut!")
+                showErrorMessage("ConnectionTimedOut!")
             }
         })
     }
 
-    private fun ShowErrorMessage(error: String) {
+    private fun showErrorMessage(error: String) {
         title!!.text = error
         title!!.textSize = 20f
         overview!!.text = ""
@@ -79,13 +79,13 @@ class MovieDetailsFragment : Fragment() {
         drawGlide!!.draw(context, Constants.DEFAULT_IMAGE_REQUEST, Constants.DEFAULT_IMAGE, imageView)
     }
 
-    private fun InitViewItems(details: Details) {
+    private fun initViewItems(details: Details) {
         var genre = "genres : "
         scrollView!!.visibility = View.VISIBLE
         title!!.text = details.title
         overview!!.text = details.overview
         rank!!.text = details.voteAverage.toString()
-        for (s in details.genres) genre += """
+        for (s in details.genres!!) genre += """
  - ${s.name}"""
         genres!!.text = genre
         drawGlide!!.draw(

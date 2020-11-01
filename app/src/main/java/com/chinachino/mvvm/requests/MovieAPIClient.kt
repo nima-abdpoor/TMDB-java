@@ -14,7 +14,7 @@ import java.io.IOException
 import java.util.concurrent.Future
 
 class MovieAPIClient {
-    private val listMutableLiveData: MutableLiveData<List<Result?>?> = MutableLiveData()
+    private val listMutableLiveData: MutableLiveData<List<Result>> = MutableLiveData()
     private val movieMutableLiveData: MutableLiveData<Details?> = MutableLiveData()
     private val requestTimeOut: MutableLiveData<Boolean> = MutableLiveData()
     private var movieDetailsRunnable: RetrieveMovieDetailsRunnable? = null
@@ -24,12 +24,12 @@ class MovieAPIClient {
         return requestTimeOut
     }
 
-    val movies: LiveData<List<Result?>?>
+    val movies: LiveData<List<Result>>
         get() = listMutableLiveData
     val movieDetails: LiveData<Details?>
         get() = movieMutableLiveData
 
-    fun SearchMovieAPI(query: String?, page: Int) {
+    fun searchMovieAPI(query: String, page: Int) {
         requestTimeOut.postValue(false)
         if (retrieveMoviesRunnable != null) {
             retrieveMoviesRunnable = null
@@ -39,7 +39,7 @@ class MovieAPIClient {
         scheduler.schedule(handler, requestTimeOut)
     }
 
-    fun SearchMovieID(movieID: Int) {
+    fun searchMovieID(movieID: Int) {
         requestTimeOut.postValue(false)
         if (movieDetailsRunnable != null) {
             movieDetailsRunnable = null
@@ -49,13 +49,13 @@ class MovieAPIClient {
         scheduler.schedule(handler, requestTimeOut)
     }
 
-    private inner class RetrieveMoviesRunnable(private val query: String?, private val page: Int) : Runnable {
+    private inner class RetrieveMoviesRunnable(private val query: String, private val page: Int) : Runnable {
         private var cancelRequest = false
         private val TAG = "MovieAPIClient"
         var results: List<Result>? = null
         override fun run() {
             try {
-                val response: Response<*> = getMovies(query, page).execute()
+                val response: Response<*> = getMovies(query, page)!!.execute()
                 if (cancelRequest) {
                     return
                 }
@@ -76,7 +76,7 @@ class MovieAPIClient {
             }
         }
 
-        fun getMovies(query: String?, page: Int): Call<Example> {
+        fun getMovies(query: String, page: Int): Call<Example?>? {
             return ServiceGenerator.getMovies().searchResponse(Constants.API_KEY, Constants.DEFAULT_LANGUAGE, query, page, Constants.DEFAULT_ADULT)
         }
 

@@ -13,8 +13,8 @@ import androidx.navigation.Navigation
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.chinachino.mvvm.R
+import com.chinachino.mvvm.ViewModels.MovieListViewModel
 import com.chinachino.mvvm.utils.Constants
-import com.chinachino.mvvm.viewModels.MovieListViewModel
 import com.chinachino.mvvm.adapters.MovieRecyclerAdapter
 import com.chinachino.mvvm.adapters.OnMovieListener
 import com.chinachino.mvvm.models.Result
@@ -22,7 +22,7 @@ import java.util.*
 
 class MovieListFragment : Fragment(), OnMovieListener {
     private var recyclerView: RecyclerView? = null
-    private var mviewModel: MovieListViewModel? = null
+    lateinit var mviewModel: MovieListViewModel
     private var adapter: MovieRecyclerAdapter? = null
     var navController: NavController? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,8 +46,8 @@ class MovieListFragment : Fragment(), OnMovieListener {
     }
 
     private fun initSearchView() {}
-    fun subscribeObservers() {
-        mviewModel!!.movies.observe(this, { results: List<Result>? ->
+    private fun subscribeObservers() {
+        mviewModel!!.movies.observe(this, { results: List<Result> ->
             if (results != null) {
                 //Testing.Test(results, TAG)
                 mviewModel!!.isMovieRetrieved = true
@@ -64,7 +64,7 @@ class MovieListFragment : Fragment(), OnMovieListener {
         })
     }
 
-    private fun SearchMovieAPI(query: String, page: Int, onResume: Boolean) {
+    private fun searchMovieAPI(query: String, page: Int, onResume: Boolean) {
         if (onResume) loadFirstPage() else mviewModel!!.searchMovieAPI(query, page)
     }
 
@@ -75,7 +75,7 @@ class MovieListFragment : Fragment(), OnMovieListener {
         try {
             mviewModel!!.searchMovieAPI(Constants.DEFAULT_MOVIE_LIST_NAME[number], Constants.DEFAULT_PAGE)
         } catch (e: ArrayIndexOutOfBoundsException) {
-            SearchMovieAPI("error", Constants.DEFAULT_PAGE, false)
+            searchMovieAPI("error", Constants.DEFAULT_PAGE, false)
             Log.e(TAG, "SearchMovieAPI: searchOnResume", e)
         }
     }
@@ -94,7 +94,7 @@ class MovieListFragment : Fragment(), OnMovieListener {
         searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 adapter!!.displayLoading()
-                SearchMovieAPI(query, 1, false)
+                searchMovieAPI(query, 1, false)
                 return false
             }
 
@@ -114,7 +114,7 @@ class MovieListFragment : Fragment(), OnMovieListener {
     override fun onCategoryClick(category: String?) {}
     override fun onResume() {
         super.onResume()
-        SearchMovieAPI("life", Constants.DEFAULT_PAGE, true)
+        searchMovieAPI("life", Constants.DEFAULT_PAGE, true)
     }
 
     companion object {

@@ -99,7 +99,7 @@ class MovieRecyclerAdapter(private val onMovieListener: OnMovieListener) : Recyc
 
     private fun getOverview(result: Result): String {
         try {
-            return result.overview.substring(0, 20) + "..."
+            return result.overview?.substring(0, 20) + "..."
         } catch (s: StringIndexOutOfBoundsException) {
             Log.d(TAG, "getOverview: $s")
         }
