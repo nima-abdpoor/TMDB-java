@@ -8,6 +8,7 @@
  - Show Details Of Selected Movie
  
 # Technologies
+ - kotlin & java
  - MVVM architecture
  - Navigaion Components with animation
  - ~~DiffUtils~~
